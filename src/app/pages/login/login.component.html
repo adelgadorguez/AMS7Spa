@@ -1,3 +1,15 @@
 
 
-<label>LoginComponent</label>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <input type="email" placeholder="Enter email" [(ngModel)] = "loginModel.email" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="password" placeholder="Enter password" [(ngModel)] = "loginModel.password" required>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="signIn()">Submit</button>
+</div>
