@@ -21,11 +21,10 @@ export class LoginComponent {
     this.loginModel = new LoginModel()
   }  
 
-  signIn() 
-  {
+  signIn() {
     let result: boolean = false;
 
-    result = this.authService.signIn(this.loginModel.email, this.loginModel.password);
+    result = this.authService.signIn(this.loginModel.username, this.loginModel.password);
 
     if (result)
     {
@@ -33,5 +32,8 @@ export class LoginComponent {
     }
 
     return result;
-  }    
+  }  
+  
+  forgotPassword() {
+  }
 }

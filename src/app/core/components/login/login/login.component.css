@@ -6,6 +6,12 @@
     outline: none;
 }
 
+.body-font {
+    font-family: Arial;
+    background-color: rgb(68, 103, 159);
+    padding: 50px;
+}
+
 .login {
     margin: 20px auto;
     width: 300px;
@@ -75,6 +81,8 @@ input:focus {
     color: #444;
     display: block;
     margin-top: 12px;
+    text-decoration: none;
+    cursor: default;
 }
 
 h1 {
@@ -99,3 +107,4 @@ h1 {
     display: flex;
     align-items: center;
 }
+

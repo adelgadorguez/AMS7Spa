@@ -1,6 +1,6 @@
 
 
-<div style="padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px" class="blue-bg">
+<div style="padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px" class="body-background body-font">
     <div class="login">
         <a href="https://www.mvptranslations.net/">
             <img alt="MVPTranslations Logo" src="../../../../../assets/images/MVPTranslationsLogo.jpg" />
@@ -17,7 +17,7 @@
                 <div class="control-group">
                     <div class="row">
                         <div class="col-10">
-                            <input type="text" tabindex="101" placeholder="Email" class="Login-UserName" [(ngModel)] = "loginModel.email">
+                            <input type="text" tabindex="101" placeholder="UserName" class="Login-UserName" [(ngModel)] = "loginModel.username">
                         </div>
                         <div class="col-2"></div>
                     </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div asp-validation-summary="All" class="text-danger" style="font-size: 11px !important;"></div>
                 <button type="submit" tabindex="103" class="btn btn-primary block full-width m-b" (click)="signIn()">Login</button>
-                <a class="login-link" asp-area="Identity" asp-page="/Account/ForgotPassword">Forgot password?</a>
+                <a class="login-link" asp-area="Identity" asp-page="/Account/ForgotPassword" (click)="forgotPassword()">Forgot password?</a>
                 <span style="text-align:center; font-size:11px; font-weight:bold">
                     Version: AMS7
                 </span>
