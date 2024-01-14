@@ -1,10 +1,9 @@
-import { ResourceLoader } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
 
   constructor() { }
 
@@ -23,5 +22,4 @@ export class LoginService {
     result = true;
 
     return result;
-  }
-}
+  }}

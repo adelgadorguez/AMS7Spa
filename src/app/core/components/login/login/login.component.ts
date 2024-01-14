@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { LoginModel } from '../../../models/login/login.model';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { LoginModel } from 'src/app/models/login/login.model';
-import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,23 +9,22 @@ import { LoginService } from 'src/app/services/login/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
   loginModel: LoginModel;
-  
+
   constructor
   (
-    private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   )
   {
     this.loginModel = new LoginModel()
-  }
-  
+  }  
+
   signIn() 
   {
     let result: boolean = false;
 
-    result = this.loginService.signIn(this.loginModel.email, this.loginModel.password);
+    result = this.authService.signIn(this.loginModel.email, this.loginModel.password);
 
     if (result)
     {
@@ -34,5 +32,5 @@ export class LoginComponent {
     }
 
     return result;
-  }  
+  }    
 }
