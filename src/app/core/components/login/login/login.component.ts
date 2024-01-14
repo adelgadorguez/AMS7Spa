@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { LoginModel } from '../../../models/login/login.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ export class LoginComponent {
 
     if (result)
     {
-      this.router.navigate(['dashboard'])
+      this.router.navigate(['home'])
     }
 
     return result;
