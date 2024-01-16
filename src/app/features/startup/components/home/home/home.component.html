@@ -1,8 +1,8 @@
 <form [formGroup]="homeFormGroup" (ngSubmit)="onSubmit()">
 
     <label for="first-name">First Name: </label>
-    <input id="first-name" type="text" formControlName="firstName">
-    <div *ngIf="firstNameFormControl.invalid && (firstNameFormControl.dirty || firstNameFormControl.touched)" class="alert alert-danger">
+    <input id="first-name" type="text" formControlName="firstName" [ngClass]="{'input-border-error': firstNameFormControl.invalid && (firstNameFormControl.dirty || firstNameFormControl.touched) }">
+    <div *ngIf="firstNameFormControl.invalid && (firstNameFormControl.dirty || firstNameFormControl.touched)" class="invalid-feedback">
         <div *ngIf="firstNameFormControl.errors?.['minlength']">
             firstName min length 3 characters.
         </div>
@@ -15,8 +15,8 @@
     </div>
 
     <label for="last-name">Last Name: </label>
-    <input id="last-name" type="text" formControlName="lastName">
-    <div *ngIf="lastNameFormControl.invalid && (lastNameFormControl.dirty || lastNameFormControl.touched)" class="alert alert-danger">
+    <input id="last-name" type="text" formControlName="lastName" [ngClass]="{'input-border-error': lastNameFormControl.invalid && (lastNameFormControl.dirty || lastNameFormControl.touched) }">
+    <div *ngIf="lastNameFormControl.invalid && (lastNameFormControl.dirty || lastNameFormControl.touched)" class="alert alert-danger" class="input-color-error">
         <div *ngIf="lastNameFormControl.errors?.['minlength']">
             firstName min length 3 characters.
         </div>
