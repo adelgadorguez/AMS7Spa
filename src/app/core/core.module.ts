@@ -10,7 +10,7 @@ import { ErrorComponent } from './components/error/error.component';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    ErrorComponent
+    ErrorComponent,
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LoginModel } from '../../models/login.model'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,7 @@ export class AuthService {
     return result;
   }
 
-  signIn(loginModel: LoginModel): boolean 
+  signIn(username: string, password: string): boolean 
   {
     let result: boolean = false;
 
