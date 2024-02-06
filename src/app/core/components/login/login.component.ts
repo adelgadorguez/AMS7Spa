@@ -31,7 +31,7 @@ export class LoginComponent {
   }  
 
   onSubmit() {
-    let result: boolean = false;
+    let result: string | null;
     
     result = this.authService.signIn(this.usernameFormControl.value, this.passwordFormControl.value);
 
