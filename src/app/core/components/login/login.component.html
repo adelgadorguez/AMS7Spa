@@ -1,0 +1,70 @@
+
+
+<div style="padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px" class="body-background body-font">
+    <div class="login">
+        <a href="https://www.mvptranslations.net/">
+            <img alt="MVPTranslations Logo" src="../../../../../assets/images/MVPTranslationsLogo.jpg" />
+        </a>
+    </div>
+    <div class="login">
+        <div class="login-screen">
+            <div class="appointment-br-middle"></div>
+            <div class="app-title">
+                <h1>Login</h1>
+            </div>
+            <div class="appointment-br-middle"></div>
+            <form class="login-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-10">
+                            <input id="username" formControlName="username" [ngClass]="usernameFormControl.invalid && (usernameFormControl.dirty || usernameFormControl.touched) ? 'form-border-invalid' : 'form-border-valid'" type="text" tabindex="101" placeholder="UserName">
+                            <!-- hidden rules
+                            <div *ngIf="usernameFormControl.invalid && (usernameFormControl.dirty || usernameFormControl.touched)" class="form-color-invalid">
+                                <div *ngIf="usernameFormControl.errors?.['minlength']">
+                                    firstName min length 3 characters.
+                                </div>
+                                <div *ngIf="usernameFormControl.errors?.['maxlength']">
+                                    firstName max length 256 characters.
+                                </div>
+                                <div *ngIf="usernameFormControl.errors?.['required']">
+                                    firstName is required.
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-10">
+                            <input id="password" formControlName="password" [ngClass]="passwordFormControl.invalid && (passwordFormControl.dirty || passwordFormControl.touched) ? 'form-border-invalid' : 'form-border-valid'" type="password" tabindex="102" placeholder="Password">
+                            <!-- hidden rules
+                            <div *ngIf="passwordFormControl.invalid && (passwordFormControl.dirty || passwordFormControl.touched)" class="form-color-invalid">
+                                <div *ngIf="passwordFormControl.errors?.['minlength']">
+                                    firstName min length 3 characters.
+                                </div>
+                                <div *ngIf="passwordFormControl.errors?.['maxlength']">
+                                    firstName max length 256 characters.
+                                </div>
+                                <div *ngIf="passwordFormControl.errors?.['required']">
+                                    firstName is required.
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+                <button id="buttonSubmit" [disabled]="!formGroup.valid" type="submit" tabindex="103" class="btn btn-primary block full-width m-b">Login</button>
+                <a class="login-link" asp-area="Identity" asp-page="/Account/ForgotPassword" (click)="forgotPassword()">Forgot password?</a>
+                <span style="text-align:center; font-size:11px; font-weight:bold">
+                    Version: AMS7
+                </span>
+            </form>
+        </div>
+    </div>
+</div>    
+
+
+

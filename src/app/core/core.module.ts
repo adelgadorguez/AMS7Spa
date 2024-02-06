@@ -2,16 +2,14 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { HeaderComponent } from './components/header/header/header.component';
-import { FooterComponent } from './components/footer/footer/footer.component';
-import { LoginComponent } from './components/login/login/login.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    LoginComponent,
     ErrorComponent
   ],
   imports: [
