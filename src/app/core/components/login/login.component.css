@@ -1,3 +1,9 @@
+
+
+/*
+login
+*/
+
 * {
     box-sizing: border-box;
 }
@@ -70,6 +76,7 @@ input:focus {
     width: 250px;
     margin: 0 auto;
     height: 50px;
+    cursor:pointer;
 }
 
 .btn:hover {
@@ -82,7 +89,7 @@ input:focus {
     display: block;
     margin-top: 12px;
     text-decoration: none;
-    cursor: default;
+    cursor: pointer;
 }
 
 h1 {
@@ -107,6 +114,10 @@ h1 {
     display: flex;
     align-items: center;
 }
+
+/*
+form-valid-invalid
+*/
 
 .form-border-valid {
     border-left: 5px solid #42A948; /* green */

@@ -16,8 +16,8 @@ import { LoginModel } from '../../models/login.model';
 
 export class LoginComponent {
   formGroup = new FormGroup({
-    username: new FormControl('', [ Validators.required, Validators.minLength(3), Validators.maxLength(256) ]),
-    password: new FormControl('', [ Validators.required, Validators.minLength(3), Validators.maxLength(256) ])
+    username: new FormControl('', [ Validators.required/*hidden rules , Validators.minLength(3), Validators.maxLength(256)*/ ]),
+    password: new FormControl('', [ Validators.required/*hidden rules , Validators.minLength(3), Validators.maxLength(256)*/ ])
   });
 
   usernameFormControl: any = this.formGroup.get("username")
@@ -50,5 +50,6 @@ export class LoginComponent {
   }
   
   forgotPassword() {
+    alert('forgot password');
   }
 }
