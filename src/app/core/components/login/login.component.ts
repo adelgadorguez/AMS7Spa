@@ -23,6 +23,7 @@ export class LoginComponent {
 
   usernameFormControl: any = this.formGroup.get("username")
   passwordFormControl: any = this.formGroup.get("password")
+  application: string = 'appointmentsummaryspa';
 
   constructor
   (
@@ -35,24 +36,31 @@ export class LoginComponent {
 
     userModel.username = this.usernameFormControl.value;
     userModel.password = this.passwordFormControl.value;
-    userModel.application = 'appointmentsummaryspa';
+    userModel.application = this.application;
+    userModel.token = '';
+    userModel.status = '';
 
     this.authService
         .signIn(userModel)
-        .pipe(catchError((error: any, caught: Observable<string>): Observable<string> => {
+        .pipe(catchError((error: any, caught: Observable<UserModel>): Observable<UserModel> => {
           console.error(error.message);
           this.router.navigate(['/login']);
           return of();
         }))
-        .subscribe((data: string) => {          
-          let jsonObject: any = JSON.stringify(data)  // convert a value to the JSON notation
-          let jsonParse = JSON.parse(jsonObject);     // convert a JSON notation to object
-          console.log('token', jsonParse.value);          
+        .subscribe((data: UserModel) => {          
+          console.log('token', data.token);          
           this.router.navigate(['/interpreter']);
         });
   }
   
   forgotPassword() {
-    alert('forgot password');
+  }
+
+  valueToJson(value: any): any {
+    return JSON.stringify(value);
+  }
+
+  jsonToObject(object: any): any {
+    return JSON.parse(object);
   }
 }
