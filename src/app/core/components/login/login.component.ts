@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth/auth.service';
+import { Observable, catchError, of } from 'rxjs';
+import { UserModel } from '../../models/usermodel/usermodel.model';
 
 @Component({
   standalone: true,
@@ -26,21 +28,26 @@ export class LoginComponent {
   (
     private authService: AuthService,
     private router: Router
-  )
-  {
-  }  
+  ) {  }  
 
   onSubmit() {
-    let result: string | null;
+    let userModel: UserModel = new UserModel;
     
-    result = this.authService.signIn(this.usernameFormControl.value, this.passwordFormControl.value);
+    userModel.username = this.usernameFormControl.value;
+    userModel.password = this.passwordFormControl.value;
+    userModel.application = 'appointmentsummaryspa';
 
-    if (result)
-    {
-      this.router.navigate(['home'])
-    }
-
-    return result;
+    this.authService
+        .signIn(userModel)
+        .pipe(catchError((error: any, caught: Observable<string | null>): Observable<string | null> => {
+          console.error('error', error.message);
+          this.router.navigate(['/error']);
+          return of();
+        }))
+        .subscribe(data => {
+          console.log('success', data);
+          this.router.navigate(['/interpreter']);
+        });
   }
   
   forgotPassword() {
