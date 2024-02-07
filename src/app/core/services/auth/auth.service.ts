@@ -20,9 +20,8 @@ export class AuthService {
     return result;
   }
 
-  signIn(userModel: UserModel): Observable<string | null>
+  signIn(userModel: UserModel): Observable<string>
   {
-    console.log('userModel', userModel)
-    return this.httpClient.post<string | null>(this.endpoint + 'Login', userModel);
+    return this.httpClient.post<string>(this.endpoint + 'Login', userModel);
   }
 }

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { Observable, catchError, of } from 'rxjs';
 import { UserModel } from '../../models/usermodel/usermodel.model';
+import { OkObjectResult } from '../../models/okobjectresult/ok-object-result.model';
 
 @Component({
   standalone: true,
@@ -32,20 +33,26 @@ export class LoginComponent {
 
   onSubmit() {
     let userModel: UserModel = new UserModel;
-    
+
     userModel.username = this.usernameFormControl.value;
     userModel.password = this.passwordFormControl.value;
     userModel.application = 'appointmentsummaryspa';
 
     this.authService
         .signIn(userModel)
-        .pipe(catchError((error: any, caught: Observable<string | null>): Observable<string | null> => {
-          console.error('error', error.message);
-          this.router.navigate(['/error']);
+        .pipe(catchError((error: any, caught: Observable<string>): Observable<string> => {
+          console.error(error.message);
+          this.router.navigate(['/login']);
           return of();
         }))
-        .subscribe(data => {
-          console.log('success', data);
+        .subscribe((data: string) => {
+          let jsonObject: any = JSON.stringify(data)                        // convert a value to the JSON notation
+          let okObjectResult: OkObjectResult = <OkObjectResult>jsonObject;  // convert a JSON notation to typescript class          
+          let token = okObjectResult.value;
+
+          console.log('jsonObject', jsonObject);          
+          console.log('okObjectResult', okObjectResult);          
+          console.log('token', token);          
           this.router.navigate(['/interpreter']);
         });
   }
