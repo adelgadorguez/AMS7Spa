@@ -46,15 +46,9 @@ export class LoginComponent {
           return of();
         }))
         .subscribe((data: string) => {          
-          let jsonObject: any = JSON.stringify(data)                        // convert a value to the JSON notation
-          let okObjectResult: OkObjectResult = <OkObjectResult>jsonObject;  // convert a JSON notation to typescript class          
-          let token = okObjectResult.value;
-
-          console.log('jsonObject', jsonObject);          
-          console.log('okObjectResult', okObjectResult);          
-          console.log('token', token);          
-          console.log('value', okObjectResult.value);          
-
+          let jsonObject: any = JSON.stringify(data)  // convert a value to the JSON notation
+          let jsonParse = JSON.parse(jsonObject);     // convert a JSON notation to object
+          console.log('token', jsonParse.value);          
           this.router.navigate(['/interpreter']);
         });
   }
