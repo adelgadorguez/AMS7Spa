@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { UserModel } from '../../models/usermodel/usermodel.model';
-import { OkObjectResult } from '../../models/okobjectresult/ok-object-result.model';
 
 @Component({
   standalone: true,
