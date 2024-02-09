@@ -5,17 +5,17 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth/auth.service';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 import { UserModel } from '../../models/usermodel/usermodel.model';
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css'],
   imports:[ReactiveFormsModule, CommonModule]
 })
-export class LoginComponent {
+export class AuthComponent {
   formGroup = new FormGroup({
     username: new FormControl('', [ Validators.required/*hidden rules , Validators.minLength(3), Validators.maxLength(256)*/ ]),
     password: new FormControl('', [ Validators.required/*hidden rules , Validators.minLength(3), Validators.maxLength(256)*/ ])
@@ -24,6 +24,8 @@ export class LoginComponent {
   usernameFormControl: any = this.formGroup.get("username")
   passwordFormControl: any = this.formGroup.get("password")
   application: string = 'appointmentsummaryspa';
+  token: string = '';
+  errorMessage: string = '';
 
   constructor
   (
@@ -41,14 +43,18 @@ export class LoginComponent {
     userModel.status = '';
 
     this.authService
-        .signIn(userModel)
-        .pipe(catchError((error: any, caught: Observable<UserModel>): Observable<UserModel> => {
-          console.error(error.message);
-          this.router.navigate(['/login']);
-          return of();
-        }))
+        .login(userModel)
+        .pipe(
+          tap(({ token }) => { 
+            this.token = token;
+          }),
+          catchError((error: any, caught: Observable<UserModel>): Observable<UserModel> => {
+            this.errorMessage = error.message;
+            this.router.navigate(['/login']);
+            return of();
+          })
+        )
         .subscribe((data: UserModel) => {          
-          console.log('token', data.token);          
           this.router.navigate(['/interpreter']);
         });
   }
