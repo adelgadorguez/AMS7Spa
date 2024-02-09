@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { UserModel } from '../../models/usermodel/usermodel.model';
 import { Router } from '@angular/router';
@@ -10,16 +11,18 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   endpoint: string = 'http://localhost:5106/api/Auth/';
-  userSuject: BehaviorSubject<any>;
+  jwtHelper = new JwtHelperService();
+  userSuject: BehaviorSubject<UserModel>;
   user: Observable<UserModel>;
-  refeshTokenTimeout: any;
+  
+  constructor(
+    private router: Router,
+    private httpClient: HttpClient) { 
+      this.userSuject = new BehaviorSubject<any>(null);
+      this.user = this.userSuject.asObservable(); 
+    }
 
-  constructor(private httpClient: HttpClient, private router: Router) { 
-    this.userSuject = new BehaviorSubject<UserModel | null>(null);
-    this.user = this.userSuject.asObservable(); 
-  }
-
-  userValue(): UserModel {
+  public get userValue(): UserModel {
     return this.userSuject.value;
   }
 
@@ -28,24 +31,27 @@ export class AuthService {
     return this.httpClient.post<UserModel>(this.endpoint + 'Login', userModel)
       .pipe(map(user => {
         this.userSuject.next(user);
+        const decodedToken = this.jwtHelper.decodeToken(user.token);
+        const expirationDate = this.jwtHelper.getTokenExpirationDate(user.token);
+        const isExpired = this.jwtHelper.isTokenExpired(user.token);
+        console.log('Token: ', decodedToken);
+        console.log('Token Expired Date: ', expirationDate);
+        console.log('Token Expired: ', isExpired);        
         return user;
       }));
   }
 
   isExpired(): boolean {
-    let result: boolean = false;
-
-    if (this.userValue == null) {
-      result = true;
+    if(this.userValue == null) {
+      return true;
     }
-
-    return result;
+    return this.jwtHelper.isTokenExpired(this.userValue.token);
   }
 
   logout(): void {
     this.httpClient.post(this.endpoint + 'Logout', null)
       .subscribe();
-    this.userSuject.next(null);
+      this.userSuject = new BehaviorSubject<any>(null);
     this.router.navigate(['/login']);
   }
 }
