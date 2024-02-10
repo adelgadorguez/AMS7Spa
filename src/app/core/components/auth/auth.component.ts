@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, catchError, first, map, of, tap } from 'rxjs';
 
 import { AuthService } from '../../services/auth/auth.service';
-import { Observable, catchError, map, of, tap } from 'rxjs';
 import { UserModel } from '../../models/usermodel/usermodel.model';
 
 @Component({
@@ -15,27 +15,39 @@ import { UserModel } from '../../models/usermodel/usermodel.model';
   styleUrls: ['./auth.component.css'],
   imports:[ReactiveFormsModule, CommonModule]
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {  
   formGroup = new FormGroup({
     username: new FormControl('', [ Validators.required/*hidden rules , Validators.minLength(3), Validators.maxLength(256)*/ ]),
     password: new FormControl('', [ Validators.required/*hidden rules , Validators.minLength(3), Validators.maxLength(256)*/ ])
   });
-
+  loading: boolean = false;
+  submitted: boolean = false;
+  returnUrl: string = '';
+  error: string = '';
   usernameFormControl: any = this.formGroup.get("username")
   passwordFormControl: any = this.formGroup.get("password")
   application: string = 'appointmentsummaryspa';
   token: string = '';
-  errorMessage: string = '';
 
   constructor
   (
     private authService: AuthService,
+    private route: ActivatedRoute,
     private router: Router
-  ) {  }  
+  ) {
+    if (this.authService.userValue) {
+      this.router.navigate(['/summary']);
+    }
+  }  
+  
+  ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/summary';
+  }
 
-  onSubmit() {
+  onSubmit(): void {
     let userModel: UserModel = new UserModel;
 
+    this.loading = true;
     userModel.username = this.usernameFormControl.value;
     userModel.password = this.passwordFormControl.value;
     userModel.application = this.application;
@@ -43,22 +55,18 @@ export class AuthComponent {
     userModel.status = '';
 
     this.authService
-        .login(userModel)
-        .pipe(
-          tap(({ token }) => { 
-            this.token = token;
-          }),
-          catchError((error: any, caught: Observable<UserModel>): Observable<UserModel> => {
-            this.errorMessage = error.message;
-            this.router.navigate(['/login']);
-            return of();
-          })
-        )
-        .subscribe((data: UserModel) => {          
-          this.router.navigate(['/interpreter']);
-        });
+      .login(userModel)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error: (error) => {
+          this.router.navigate(['/login']);
+        },
+      });
   }
-  
+
   forgotPassword() {
   }
 
