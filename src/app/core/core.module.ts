@@ -9,6 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { AuthService } from './services/auth/auth.service';
+import { JwtInterceptorService } from './services/interceptor/jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AuthService } from './services/auth/auth.service';
   ]*/
   providers:[
     AuthGuard,
-    AuthService
+    AuthService,
+    JwtInterceptorService
   ]
 })
 export class CoreModule { 

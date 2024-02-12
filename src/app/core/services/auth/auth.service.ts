@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  endpoint: string = 'http://localhost:5106/api/Auth/';
+  apiUrl: string = 'http://localhost:5106/api/Auth/';
   jwtHelper = new JwtHelperService();
   userSuject: BehaviorSubject<UserModel>;
   user: Observable<UserModel>;
@@ -28,7 +28,7 @@ export class AuthService {
 
   login(userModel: UserModel): Observable<UserModel>
   {
-    return this.httpClient.post<UserModel>(this.endpoint + 'Login', userModel)
+    return this.httpClient.post<UserModel>(this.apiUrl + 'Login', userModel)
       .pipe(map(user => {
         this.userSuject.next(user);
         const decodedToken = this.jwtHelper.decodeToken(user.token);
