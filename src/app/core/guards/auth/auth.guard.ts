@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+
 import { AuthService } from "../../services/auth/auth.service";
 
 @Injectable({ providedIn: 'root'})
@@ -13,7 +14,6 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot): boolean {
       const user = this.authService.userValue;
-      console.log('user', user);
       if (user) {
         if (this.authService.isExpired()) {
           this.authService.logout();

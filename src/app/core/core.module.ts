@@ -7,6 +7,8 @@ import { /*HTTP_INTERCEPTORS,*/ HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ErrorComponent } from './components/error/error.component';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { AuthService } from './services/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -18,10 +20,14 @@ import { ErrorComponent } from './components/error/error.component';
     CommonModule,
     FormsModule,
     HttpClientModule
-  ]/*,
+  ],/*,
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ]*/
+  providers:[
+    AuthGuard,
+    AuthService
+  ]
 })
 export class CoreModule { 
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

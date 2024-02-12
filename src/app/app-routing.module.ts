@@ -6,14 +6,22 @@ import { AppointmentSummaryDriverComponent } from './features/components/appoint
 import { ErrorComponent } from './core/components/error/error.component';
 import { AuthComponent } from './core/components/auth/auth.component';
 import { AppointmentsummaryComponent } from './features/components/appointmentsummary/appointmentsummary.component';
+import { AuthGuard } from './core/guards/auth/auth.guard';
 
 const routes: Routes = [
   { path: '', component: AuthComponent },
-  { path: 'auth', component: AuthComponent},
-  { path: 'summary', component: AppointmentsummaryComponent},
-  { path: 'interpreter', component: AppointmentSummaryInterpreterComponent},
-  { path: 'driver', component: AppointmentSummaryDriverComponent},
-  { path: 'error', component: ErrorComponent},
+  { path: 'auth', component: AuthComponent },
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'summary', component: AppointmentsummaryComponent },
+      { path: 'interpreter', component: AppointmentSummaryInterpreterComponent },
+      { path: 'driver', component: AppointmentSummaryDriverComponent },
+      { path: 'error', component: ErrorComponent },    
+    ]
+  },
   { path: '**', component: AuthComponent }
 ];
 
