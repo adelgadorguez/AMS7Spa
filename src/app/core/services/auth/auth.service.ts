@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.httpClient.post(this.endpoint + 'Logout', null)
+    this.httpClient.post(this.apiUrl + 'Logout', null)
       .subscribe();
       this.userSuject = new BehaviorSubject<any>(null);
     this.router.navigate(['/login']);
